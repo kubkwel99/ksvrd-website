@@ -10,10 +10,7 @@ const VideoPlayer: React.FC<{
   handleVideoClose: () => void;
   setIsVideoPlaying: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ selectedVideo, handlePrevVideo, handleNextVideo, handleVideoClose, setIsVideoPlaying }) => {
-  const variants = {
-    visible: { opacity: 1 },
-    hidden: { opacity: 0 },
-  };
+
 
   return (
     <motion.div
