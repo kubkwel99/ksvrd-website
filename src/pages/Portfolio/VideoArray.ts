@@ -16,7 +16,7 @@ export const videos: Video[] = [
     id: 1,
     type: "video/mp4",
     title: 'Royal Kebab',
-    url: 'src/assets/videos/0013.mp4',
+    url: 'https://www.youtube.com/watch?v=y6z3_ZYgNis',
     desc: 'Chce to cvik, skusat + sa inspirovat od lepsich fakt uplne najviac odporucam pozerat si IG, TT a vsimat si z akeho uhlu je to fotene/natacane (inak niekedy je napr. fajn mobil otocit "hore nohami", to ma zas inu perspektivu), odkial ide svetlo, ake strihy su tam spravene. A su aj ucty, ktore natacaju presne taketo tipy, ze ukazuju spoza kamery/fotaku ako sa ta fotka/video tvorilo + vysledok.',
   },
   {
