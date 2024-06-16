@@ -1,0 +1,67 @@
+.section {
+    margin: auto;
+    max-width: 1800px;
+    padding: 0 2rem;
+    z-index: 0;
+    color: black;
+
+    .leftSide {
+        line-height: 1.05;
+        z-index: 20;
+
+        >h1 {
+            font-size: 4.2rem;
+            font-weight: 700;
+            color: goldenrod;
+        }
+
+        >h2 {
+            font-size: 4rem;
+            font-weight: 400;
+        }
+
+        >p {
+            margin-top: 2.5rem;
+            line-height: normal;
+        }
+    }
+
+    .centerSide {
+        height: 50rem;
+        width: 50rem;
+        border: solid #000 1px;
+        border-radius: 50%;
+        background: #000;
+        box-shadow: 1px 1px 20px 0 #000;
+        z-index: 10;
+    }
+
+    .rightSide {
+        background: #43434318;
+        padding: 5rem;
+        z-index: 1;
+
+        >p {
+            margin-bottom: 1.5rem;
+        }
+
+        >div {
+            >a {
+                background-color: #000000;
+                color: white;
+                padding: 9px 15px;
+                border-radius: 50%;
+                font-size: 1.3rem;
+
+                aspect-ratio: 3/2;
+                object-fit: contain;
+                margin: auto;
+                box-shadow: 1px 1px 14px 0 #000;
+
+                &:hover {
+                    background: #202020;
+                }
+            }
+        }
+    }
+}

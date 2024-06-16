@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+    background: #0f0f0f;
+    color: #fff;
+}
+#root {
+    box-sizing: border-box;
+    scroll-behavior: auto;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    max-width: 100%;
+    min-width: 320px;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
