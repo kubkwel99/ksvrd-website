@@ -98,7 +98,7 @@ export const videos: Video[] = [
   },
   {
     id: 13,
-    type: "video/mp4",
+    type: "video/webm",
     title: 'Drum&Bass Wear',
     url: 'src/assets/videos/0001.webm',
     desc: 'of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
