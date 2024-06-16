@@ -16,14 +16,14 @@ export const videos: Video[] = [
     id: 1,
     type: "video/mp4",
     title: 'Royal Kebab',
-    url: 'https://www.youtube.com/watch?v=y6z3_ZYgNis',
+    url: 'https://cloud.appwrite.io/v1/storage/buckets/666f14d2002a47cf4900/files/666f153c00378dfc6c12/view?project=666f14900035a4f1355f&mode=admin',
     desc: 'Chce to cvik, skusat + sa inspirovat od lepsich fakt uplne najviac odporucam pozerat si IG, TT a vsimat si z akeho uhlu je to fotene/natacane (inak niekedy je napr. fajn mobil otocit "hore nohami", to ma zas inu perspektivu), odkial ide svetlo, ake strihy su tam spravene. A su aj ucty, ktore natacaju presne taketo tipy, ze ukazuju spoza kamery/fotaku ako sa ta fotka/video tvorilo + vysledok.',
   },
   {
     id: 2,
     type: "video/mp4",
     title: 'Royal Kebab',
-    url: 'src/assets/videos/0012.mp4',
+    url: 'https://cloud.appwrite.io/v1/storage/buckets/666f14d2002a47cf4900/files/666f15350035dbcd12a6/view?project=666f14900035a4f1355f&mode=admin',
     desc: 'Aj videá sa dajú natáčať geniálne jednoducho. Trvalo mi to 2 roky. Že nepotrebujem štáb ľudí okolo seba! Kým som našla spôsob.',
   },
   {
