@@ -82,7 +82,7 @@ const VideoGrid: React.FC = () => {
                 className='cursor-pointer w-72 h-auto object-cover'
                 style={{ aspectRatio: '1 / 1' }}
                 onClick={() => handleVideoPlay(video)}
-                data-type={video.type} // Ensure this matches the correct MIME type
+                
               />
             </motion.div>
           ))}
@@ -102,7 +102,7 @@ const VideoGrid: React.FC = () => {
                 autoPlay
                 controls
                 onPause={() => setIsVideoPlaying(false)}
-                data-type={selectedVideo.type} // Ensure this matches the correct MIME type
+                
               />
               <div className='textDiv flex flex-col flex-nowrap items-start p-6 pb-1 h-auto'>
                 <h1 className='text-5xl mb-4 underline'>{selectedVideo.title}</h1>
