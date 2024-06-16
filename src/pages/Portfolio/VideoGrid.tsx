@@ -6,11 +6,9 @@ import './VideoPlayer.scss';
 import { Video, videos } from './VideoArray';
 import { useVideoFunctions } from './videoFunctions';
 import { fadeIn, staggerChildren, zoomIn } from '../../assets/motion';
-import VideoPlayer from './VideoPlayer';
 
 const VideoGrid: React.FC = () => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
   const { selectedVideo, playVideo, closeVideo, handlePrevVideo, handleNextVideo } =
     useVideoFunctions();
 
@@ -80,23 +78,124 @@ const VideoGrid: React.FC = () => {
             <motion.div key={video.id} className='w-150 h-150'>
               <motion.video
                 variants={zoomIn((video.id + 1) * 0.2, 0.5)}
+                src={video.url}
                 className='cursor-pointer w-72 h-auto object-cover'
                 style={{ aspectRatio: '1 / 1' }}
                 onClick={() => handleVideoPlay(video)}
-              >
-                <source src={video.url} type='video/mp4' />
-              </motion.video>
+                data-type={video.type} // Ensure this matches the correct MIME type
+              />
             </motion.div>
           ))}
         </motion.div>
         {selectedVideo && (
-          <VideoPlayer
-            selectedVideo={selectedVideo}
-            handlePrevVideo={handlePrevVideo}
-            handleNextVideo={handleNextVideo}
-            handleVideoClose={handleVideoClose}
-            setIsVideoPlaying={setIsVideoPlaying}
-          />
+          <motion.div
+            variants={variants}
+            initial='hidden'
+            animate='visible'
+            transition={{ delay: 0.1, duration: 0.2 }}
+            id='videoPlayer'
+            className='fixed top-0 left-0 z-10 w-screen h-screen flex flex-nowrap items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm'>
+            <div className='containerDiv relative bg-black flex flex-row flex-nowrap z-50 mx-40 w-6/12' style={{ overflowX: 'visible' }}>
+              <video
+                style={{ maxWidth: '550px', minWidth: '350px' }}
+                src={selectedVideo.url}
+                autoPlay
+                controls
+                onPause={() => setIsVideoPlaying(false)}
+                data-type={selectedVideo.type} // Ensure this matches the correct MIME type
+              />
+              <div className='textDiv flex flex-col flex-nowrap items-start p-6 pb-1 h-auto'>
+                <h1 className='text-5xl mb-4 underline'>{selectedVideo.title}</h1>
+                <p className='text-base text-left'>{selectedVideo.desc}</p>
+
+                <div className='flex gap-4 text-2xl items-end justify-start' style={{ marginTop: 'auto' }}>
+                  <motion.a
+                    animate={{
+                      scale: [1, 2, 2, 1, 1],
+                      rotate: [0, 0, 180, 180, 0],
+                      borderRadius: ['0%', '0%', '30%', '30%', '0%'],
+                    }}
+                    transition={{
+                      duration: 2,
+                      ease: 'easeInOut',
+                      times: [0, 0.2, 0.5, 0.8, 1],
+                      repeat: 0,
+                      repeatDelay: 1,
+                    }}
+                    className=''
+                    href='https://www.facebook.com'>
+                    <i className='fa-brands fa-facebook hover:text-gray-400 duration-300'></i>
+                  </motion.a>
+                  <motion.a
+                    animate={{
+                      scale: [1, 2, 2, 1, 1],
+                      rotate: [0, 0, 180, 180, 0],
+                      borderRadius: ['0%', '0%', '30%', '30%', '0%'],
+                    }}
+                    transition={{
+                      duration: 2,
+                      ease: 'easeInOut',
+                      times: [0, 0.2, 0.5, 0.8, 1],
+                      repeat: 0,
+                      repeatDelay: 1,
+                    }}
+                    href='https://www.instagram.com'>
+                    <i className='fa-brands fa-instagram hover:text-gray-400 duration-300'></i>
+                  </motion.a>
+                  <motion.a
+                    animate={{
+                      scale: [1, 2, 2, 1, 1],
+                      rotate: [0, 0, 180, 180, 0],
+                      borderRadius: ['0%', '0%', '30%', '30%', '0%'],
+                    }}
+                    transition={{
+                      duration: 2,
+                      ease: 'easeInOut',
+                      times: [0, 0.2, 0.5, 0.8, 1],
+                      repeat: 0,
+                      repeatDelay: 1,
+                    }}
+                    href='https://www.tiktok.com'>
+                    <i className='fa-brands fa-tiktok hover:text-gray-400 duration-300'></i>
+                  </motion.a>
+                  <motion.a
+                    animate={{
+                      scale: [1, 2, 2, 1, 1],
+                      rotate: [0, 0, 180, 180, 0],
+                      borderRadius: ['0%', '0%', '30%', '30%', '0%'],
+                    }}
+                    transition={{
+                      duration: 2,
+                      ease: 'easeInOut',
+                      times: [0, 0.2, 0.5, 0.8, 1],
+                      repeat: 0,
+                      repeatDelay: 1,
+                    }}
+                    href='mailto:info@example.com'>
+                    <i className='fa-solid fa-envelope hover:text-gray-400 duration-300'></i>
+                  </motion.a>
+                </div>
+              </div>
+
+              <div className='preferences'>
+                <button
+                  className='leftBtn absolute -translate-x-2/4 -translate-y-2/4 top-1/2 -left-16 p-2 rounded-full text-white text-3xl text-opacity-5 hover:text-opacity-60 duration-500'
+                  onClick={handlePrevVideo}>
+                  <i className='fa-solid fa-circle-left'></i>
+                </button>
+                <button
+                  className='rightBtn absolute -translate-x-2/4 -translate-y-2/4 top-1/2 -right-24 p-2 rounded-full text-white text-3xl text-opacity-5 hover:text-opacity-60 duration-500'
+                  onClick={handleNextVideo}>
+                  <i className='fa-solid fa-circle-right'></i>
+                </button>
+                <button
+                  className='absolute translate-x-2/4 -translate-y-2/4 right-5 top-5 p-2 rounded-full text-white'
+                  onClick={handleVideoClose}>
+                  <i className='fa-solid fa-circle-xmark'></i>
+                </button>
+              </div>
+            </div>
+          </motion.div>
         )}
       </div>
     </>

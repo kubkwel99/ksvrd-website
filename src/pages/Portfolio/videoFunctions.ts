@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { videos } from './VideoArray';
 
 type Video = {
+  type: string;
   id: number;
   title: string;
   url: string;
