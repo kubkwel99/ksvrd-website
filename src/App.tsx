@@ -6,6 +6,14 @@ import Footer from './components/Footer';
 import VideoGrid from './pages/Portfolio/VideoGrid';
 import AboutPage from './components/AboutPage';
 import React from 'react';
+import { Client } from 'appwrite';
+
+const client = new Client();
+
+client
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject('666f14900035a4f1355f');
+
 
 const App = () => {
   return (
