@@ -112,32 +112,31 @@ const PortfolioPage = () => {
       style={{
         boxShadow: 'inset 0 20px 9px -6px black',
       }}>
-        <h1 className='pb-20 text-3xl'>Portfólio</h1>
+      <h1 className='pb-20 text-3xl'>Portfólio</h1>
       <motion.div
         variants={headerVariants}
         initial='hidden'
         whileInView='show'
-
         className='container flex px-4 '>
         {error ? (
           <div className='text-red-500'>{`Error: ${error}`}</div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 place-items-center m-auto">
-            {media.map((item, index) => (
+          <div className='grid grid-cols-2 md:grid-cols-3 gap-4 place-items-center m-auto'>
+            {media.map((item) => (
               <div
                 className='flex flex-row '
                 key={item.public_id}>
                 {item.resource_type === 'video' ? (
-                  <motion.video
-                    variants={fadeIn('down', 'tween', (index + 1) * 0.1, 0.4)}
+                  <video
                     className='cursor-pointer w-64 h-auto aspect-square object-cover'
                     width='300px'
-                    data-src={item.secure_url}
-                    ref={(el) => (videoRefs.current[index] = el!)}
                     onClick={() => handleVideoClick(item.secure_url)}>
-                    <source type='video/mp4' />
+                    <source
+                      src={item.secure_url}
+                      type='video/mp4'
+                    />
                     Your browser does not support the video tag.
-                  </motion.video>
+                  </video>
                 ) : (
                   <img
                     src={item.secure_url}
