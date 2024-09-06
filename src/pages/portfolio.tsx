@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
@@ -5,7 +7,6 @@ import { FaTiktok } from 'react-icons/fa6';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { fadeIn, headerVariants } from './../../types/motion';
-
 type MediaItem = {
   url: string;
   public_id: string;
@@ -20,8 +21,6 @@ const PortfolioPage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const videoRefs = useRef<HTMLVideoElement[]>([]);
-
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -70,37 +69,41 @@ const PortfolioPage = () => {
   };
 
   useEffect(() => {
-    if (!isMobile) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const video = entry.target as HTMLVideoElement;
-              video.src = video.dataset.src!;
-              observer.unobserve(video);
-            }
-          });
-        },
-        {
-          threshold: 0.1,
-        }
-      );
-
-      videoRefs.current.forEach((video) => {
-        if (video) {
-          observer.observe(video);
-        }
-      });
-
-      return () => {
-        videoRefs.current.forEach((video) => {
-          if (video) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const video = entry.target as HTMLVideoElement;
+            video.src = video.dataset.src!;
             observer.unobserve(video);
           }
         });
-      };
-    }
-  }, [media, isMobile]);
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        observer.observe(video);
+      }
+    });
+
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        observer.observe(video);
+      }
+    });
+
+    return () => {
+      videoRefs.current.forEach((video) => {
+        if (video) {
+          observer.unobserve(video);
+        }
+      });
+    };
+  }, [media]);
 
   return (
     <motion.div
@@ -111,27 +114,29 @@ const PortfolioPage = () => {
       }}>
       <h1 className='pb-20 text-3xl'>Portfólio</h1>
       <motion.div
-        variants={isMobile ? {} : headerVariants}
+        variants={headerVariants}
         initial='hidden'
         whileInView='show'
-        className='container flex px-4'>
+        className='container flex px-4 '>
         {error ? (
           <div className='text-red-500'>{`Error: ${error}`}</div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 place-items-center m-auto">
-            {media.map((item, index) => (
-              <div className='flex flex-row ' key={item.public_id}>
+          <div className='grid grid-cols-2 md:grid-cols-3 gap-4 place-items-center m-auto'>
+            {media.map((item) => (
+              <div
+                className='flex flex-row '
+                key={item.public_id}>
                 {item.resource_type === 'video' ? (
-                  <motion.video
-                    variants={isMobile ? {} : fadeIn('down', 'tween', (index + 1) * 0.1, 0.4)}
+                  <video
                     className='cursor-pointer w-64 h-auto aspect-square object-cover'
                     width='300px'
-                    data-src={item.secure_url}
-                    ref={(el) => (videoRefs.current[index] = el!)}
                     onClick={() => handleVideoClick(item.secure_url)}>
-                    <source type='video/mp4' />
+                    <source
+                      src={item.secure_url}
+                      type='video/mp4'
+                    />
                     Your browser does not support the video tag.
-                  </motion.video>
+                  </video>
                 ) : (
                   <img
                     src={item.secure_url}
@@ -150,24 +155,37 @@ const PortfolioPage = () => {
             className='fixed top-0 right-0 flex flex-col m-0 w-full h-full backdrop-blur-md'
             onClick={closeOverlay}>
             <div className='flex flex-col items-center justify-center max-h-screen py-40 relative'>
-              <video className='max-w-full max-h-full rounded-lg' controls autoPlay>
-                <source src={selectedVideo} type='video/mp4' />
+              <video
+                className='max-w-full max-h-full rounded-lg'
+                controls
+                autoPlay>
+                <source
+                  src={selectedVideo}
+                  type='video/mp4'
+                />
                 Your browser does not support the video tag.
               </video>
               <div className='p-4'>
                 <ul className='flex gap-2 text-2xl items-center'>
                   <li className='hover:scale-110 transition ease-in-out'>
-                    <a href='https://www.facebook.com/kika.svoradova?locale=sk_SK' target='_blank'>
+                    <a
+                      href='https://www.facebook.com/kika.svoradova?locale=sk_SK'
+                      target='_blank'>
                       <FaFacebook />
                     </a>
                   </li>
                   <li className='hover:scale-110 transition ease-in-out'>
-                    <a href='https://www.instagram.com/svoradova.k/' target='_blank'>
+                    <a
+                      href='https://www.instagram.com/svoradova.k/'
+                      target='_blank'>
                       <FaInstagram />
                     </a>
                   </li>
+
                   <li className='hover:scale-110  transition ease-in-out'>
-                    <a href='https://www.tiktok.com/@krsvrd' target='_blank'>
+                    <a
+                      href='https://www.tiktok.com/@krsvrd'
+                      target='_blank'>
                       <FaTiktok />
                     </a>
                   </li>
@@ -189,3 +207,6 @@ const PortfolioPage = () => {
 };
 
 export default PortfolioPage;
+function setError(message: string) {
+  throw new Error('Function not implemented.');
+}
