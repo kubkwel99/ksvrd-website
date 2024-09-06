@@ -105,6 +105,14 @@ const PortfolioPage = () => {
     };
   }, [media]);
 
+  useEffect(() => {
+  videoRefs.current.forEach((video) => {
+    if (video) {
+      video.src = video.dataset.src!;
+    }
+  });
+}, [media]);
+
   return (
     <motion.div
       className='bg-neutral-900 flex flex-col items-center justify-center w-full py-20 '
@@ -130,6 +138,8 @@ const PortfolioPage = () => {
                   <video
                     className='cursor-pointer w-64 h-auto aspect-square object-cover'
                     width='300px'
+                      muted
+  playsInline
                     onClick={() => handleVideoClick(item.secure_url)}>
                     <source
                       src={item.secure_url}
