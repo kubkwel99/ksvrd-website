@@ -1,11 +1,11 @@
 'use client';
-import AboutPage from '@/pages/about';
-import PortfolioPage from '@/pages/portfolio';
-import { motion } from 'framer-motion';
-import { headerVariants, listItem, slideUp, staggerChildren, staggerContainer, textVariant } from '../../types/motion';
-import Footer from '../../components/Footer';
 
-// src/app/page.tsx
+import { motion } from 'framer-motion';
+import { headerVariants, staggerContainer, textVariant } from '../../types/motion';
+import Footer from './../../components/Footer';
+import AboutPage from './../pages/about';
+import PortfolioPage from './../pages/portfolio';
+
 export default function HomePage() {
   return (
     <div
