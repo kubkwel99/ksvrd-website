@@ -37,7 +37,7 @@ export default function HomePage() {
           <motion.h1
             variants={textVariant(0.2)}
             className='text-6xl font-extrabold py-2 font-mono'>
-            Ahoj, som Kristína Svoradová.
+            Ahoj, som
           </motion.h1>
           <motion.p
             variants={textVariant(0.6)}
