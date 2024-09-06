@@ -20,7 +20,7 @@ const Footer = () => {
         }}
         viewport={{ once: false, amount: 0.25 }}
         className=' mx-auto'>
-        <div className='container px-4 flex flex-row justify-between items-center py-5 pt-10 mx-auto'>
+        <div className='container grid  place-items-center justify-items-center grid-cols-3 gap-4 md:place-items-center m-auto py-5 '>
           <motion.div
             variants={fadeIn('up', 'tween', 0.3, 0.5)}
             className=''>

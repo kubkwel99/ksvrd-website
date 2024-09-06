@@ -1,11 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: [
-    './src/**/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-
-  ],
+  content: ['./src/**/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       backgroundImage: {
@@ -14,7 +10,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-myfont)'],
-        mono: ['var(--font-poppins-mono)'],}
+        mono: ['var(--font-poppins-mono)'],
+      },
     },
   },
   plugins: [],
