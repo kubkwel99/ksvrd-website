@@ -29,6 +29,7 @@ const PortfolioPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -82,7 +83,6 @@ const PortfolioPage = () => {
 
   const handleVideoClick = (url: string) => {
     setSelectedVideo(url);
-    
   };
 
   useEffect(() => {
@@ -106,7 +106,12 @@ const PortfolioPage = () => {
   const closeOverlay = () => {
     setSelectedVideo(null);
   };
-  const handleVideoTap= (event: React.MouseEvent<HTMLVideoElement>) => {
+  const handleVideoTap = (event: React.MouseEvent<HTMLVideoElement>) => {
+    event.stopPropagation();
+  };
+
+  const handleVideoTouchStart: React.TouchEventHandler<HTMLVideoElement> = (event) => {
+    // Prevent touch event from propagating to the overlay
     event.stopPropagation();
   };
 
@@ -130,10 +135,11 @@ const PortfolioPage = () => {
           <div className='grid gap-5 grid-cols-2 md:grid-cols-3 p-0 m-0 place-items-center justify-items-center'>
             {media.map((video) => (
               <div
-                className=''
+              
                 key={video.public_id}>
                 {video.resource_type === 'video' ? (
                   <div
+                  
                     className='cursor-pointer w-64 h-auto aspect-square'
                     onClick={() => handleVideoClick(video.url)}
                     onTouchStart={() => handleVideoClick(video.url)}>
@@ -168,12 +174,13 @@ const PortfolioPage = () => {
             onClick={closeOverlay}>
             <div className='flex flex-col items-center justify-center max-h-screen py-40 relative'>
               <video
+              ref={videoRef}
                 className='max-w-full max-h-full rounded-lg'
                 controls
                 autoPlay
                 playsInline={isMobile}
                 onClick={handleVideoTap}
-                >
+                   onTouchStart={handleVideoTouchStart}>
                 <source
                   src={selectedVideo}
                   type='video/mp4'
@@ -209,7 +216,7 @@ const PortfolioPage = () => {
                 </ul>
               </div>
               <button
-                className='absolute -right-10 top-28 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 mx-10 py-5'
+                className='absolute -right-10 top-36 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 mx-10 py-5'
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={closeOverlay}>
@@ -224,7 +231,7 @@ const PortfolioPage = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const media = await getAllMedia(); // Ensure this returns the correct data
+  const media = await getAllMedia();
   return {
     props: {
       media,
