@@ -108,11 +108,10 @@ const PortfolioPage = () => {
   };
   const handleVideoTap = (event: React.MouseEvent<HTMLVideoElement>) => {
     event.stopPropagation();
-  };
-
-  const handleVideoTouchStart: React.TouchEventHandler<HTMLVideoElement> = (event) => {
-    // Prevent touch event from propagating to the overlay
-    event.stopPropagation();
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      videoElement.paused ? videoElement.play() : videoElement.pause();
+    }
   };
 
   return (
@@ -135,11 +134,10 @@ const PortfolioPage = () => {
           <div className='grid gap-5 grid-cols-2 md:grid-cols-3 p-0 m-0 place-items-center justify-items-center'>
             {media.map((video) => (
               <div
-              
-                key={video.public_id}>
+                key={video.public_id}
+                onTouchStart={(e) => e.stopPropagation()}>
                 {video.resource_type === 'video' ? (
                   <div
-                  
                     className='cursor-pointer w-64 h-auto aspect-square'
                     onClick={() => handleVideoClick(video.url)}
                     onTouchStart={() => handleVideoClick(video.url)}>
@@ -174,13 +172,12 @@ const PortfolioPage = () => {
             onClick={closeOverlay}>
             <div className='flex flex-col items-center justify-center max-h-screen py-40 relative'>
               <video
-              ref={videoRef}
+                ref={videoRef}
                 className='max-w-full max-h-full rounded-lg'
                 controls
                 autoPlay
                 playsInline={isMobile}
-                onClick={handleVideoTap}
-                   onTouchStart={handleVideoTouchStart}>
+                onClick={handleVideoTap}>
                 <source
                   src={selectedVideo}
                   type='video/mp4'
