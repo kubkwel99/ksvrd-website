@@ -362,7 +362,7 @@ const PortfolioPage = () => {
                   <div
                     className='cursor-pointer w-64 h-auto aspect-square'
                     onClick={() => handleVideoClick(video.url)}
-                    onTouchStart={handleVideo}>
+                    >
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover'
