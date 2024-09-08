@@ -344,6 +344,7 @@ const PortfolioPage = () => {
                         width={300}
                         src={video.url}
                         controls={false}
+                         style={{ pointerEvents: 'none' }}
                       />
                     )}
 
