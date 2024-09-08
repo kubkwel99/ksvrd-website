@@ -19,9 +19,8 @@ type MediaItem = {
   resource_type: string;
   title: string;
   thumbnail_url: string;
-  iframe_url: string; // Add this field for iframe URL
+  iframe_url: string;
 };
-
 
 const PortfolioPage = () => {
   const [media, setMedia] = useState<MediaItem[]>([]);
@@ -29,6 +28,7 @@ const PortfolioPage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
   const videoRefs = useRef<Map<string, HTMLVideoElement | null>>(new Map());
 
   useEffect(() => {
@@ -50,27 +50,41 @@ const PortfolioPage = () => {
     fetchMedia();
   }, []);
 
-    useEffect(() => {
-      const checkIfMobile = () => {
-        setIsMobile(window.innerWidth <= 768);
-      };
-  
-      checkIfMobile(); // Check on initial load
-      window.addEventListener('resize', checkIfMobile); // Re-check on resize
-  
-      return () => {
-        window.removeEventListener('resize', checkIfMobile);
-      };
-    }, []);
-  
-    const handleVideoClick = (url: string) => {
-      setSelectedVideo(url);
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
-  
-    const closeOverlay = () => {
-      setSelectedVideo(null);
+
+    checkIfMobile(); // Check on initial load
+    window.addEventListener('resize', checkIfMobile); // Re-check on resize
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
     };
-  
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node;
+      if (overlayRef.current && !overlayRef.current.contains(target)) {
+        closeOverlay();
+      }
+    };
+
+    if (selectedVideo) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [selectedVideo]);
+
+  const closeOverlay = () => {
+    setSelectedVideo(null);
+  };
 
   return (
     <motion.div
@@ -85,23 +99,20 @@ const PortfolioPage = () => {
         variants={headerVariants}
         initial='hidden'
         whileInView='show'
-        className='container flex px-4'>
+        className='container flex px-4 items-center justify-center'>
         {error ? (
           <div className='text-red-500'>{`Error: ${error}`}</div>
         ) : (
-          <div className='grid grid-cols-2 md:grid-cols-3 gap-4 place-items-center m-auto'>
+          <div className='grid gap-5 grid-cols-2 md:grid-cols-3 p-0 m-0 place-items-center justify-items-center'>
             {media.map((video) => (
               <div
-                className='flex flex-row'
+                className=''
                 key={video.public_id}>
                 {video.resource_type === 'video' ? (
-                  <div
-                    className='cursor-pointer w-64 h-auto aspect-square'
-                    onClick={() => handleVideoClick(video.url)}>
-                    
+                  <div className='cursor-pointer w-64 h-auto aspect-square '>
                     {media && (
                       <CldVideoPlayer
-                        className=' rounded-xl aspect-square bg-cover'
+                        className=' rounded-xl aspect-square bg-cover '
                         height={300}
                         width={300}
                         src={video.url}
@@ -124,7 +135,6 @@ const PortfolioPage = () => {
                     src={video.secure_url}
                     alt={video.title}
                     className='cursor-pointer w-52 h-auto object-cover'
-                    onClick={() => handleVideoClick(video.secure_url)}
                   />
                 )}
               </div>
@@ -134,6 +144,7 @@ const PortfolioPage = () => {
 
         {selectedVideo && (
           <div
+            ref={overlayRef}
             className='fixed top-0 right-0 flex flex-col m-0 w-full h-full backdrop-blur-md'
             onClick={closeOverlay}>
             <div className='flex flex-col items-center justify-center max-h-screen py-40 relative'>
