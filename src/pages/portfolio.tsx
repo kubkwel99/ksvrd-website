@@ -145,23 +145,13 @@ const PortfolioPage = () => {
                         controls={false}
                       />
                     )}
-
-                    {/* <iframe
-                      src={video.url}
-                      loading='lazy'
-                      width='300'
-                      height='200'
-                      allow=' fullscreen; encrypted-media'
-                      allowFullScreen
-                      className='w-full h-auto object-cover'
-                      title={video.title}></iframe> */}
                   </div>
                 ) : (
                   <img
                     src={video.secure_url}
                     alt={video.title}
                     className='cursor-pointer w-52 h-auto object-cover'
-                    // onClick={() => handleVideoClick(video.secure_url)}
+                    onClick={() => handleVideoClick(video.secure_url)}
                   />
                 )}
               </div>
