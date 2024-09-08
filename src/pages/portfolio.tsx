@@ -336,15 +336,15 @@ const PortfolioPage = () => {
                 {video.resource_type === 'video' ? (
                   <div
                     className='cursor-pointer w-64 h-auto aspect-square'
-                    onClick={() => handleVideoClick(video.url)}>
+                   >
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover '
                         height={300}
                         width={300}
                         src={video.url}
-                        controls={false}
-                         style={{ pointerEvents: 'none' }}
+                        controls={true}
+                        
                       />
                     )}
 
