@@ -29,7 +29,6 @@ const PortfolioPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const videoRefs = useRef<Map<string, HTMLVideoElement | null>>(new Map());
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -55,9 +54,8 @@ const PortfolioPage = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    checkIfMobile(); // Check on initial load
-    window.addEventListener('resize', checkIfMobile); // Re-check on resize
-
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
     return () => {
       window.removeEventListener('resize', checkIfMobile);
     };
@@ -82,11 +80,34 @@ const PortfolioPage = () => {
     };
   }, [selectedVideo]);
 
+  const handleVideoClick = (url: string) => {
+    setSelectedVideo(url);
+    
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeOverlay();
+      }
+    };
+
+    if (selectedVideo) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedVideo]);
+
   const closeOverlay = () => {
     setSelectedVideo(null);
   };
-  const handleVideoClick = (url: string) => {
-    setSelectedVideo(url);
+  const handleVideoTap= (event: React.MouseEvent<HTMLVideoElement>) => {
+    event.stopPropagation();
   };
 
   return (
@@ -118,7 +139,7 @@ const PortfolioPage = () => {
                     onTouchStart={() => handleVideoClick(video.url)}>
                     {media && (
                       <CldVideoPlayer
-                        className=' rounded-xl aspect-square bg-cover '
+                        className=' rounded-xl aspect-square bg-cover'
                         height={300}
                         width={300}
                         src={video.url}
@@ -160,7 +181,9 @@ const PortfolioPage = () => {
                 className='max-w-full max-h-full rounded-lg'
                 controls
                 autoPlay
-                playsInline={isMobile}>
+                playsInline={isMobile}
+                onClick={handleVideoTap}
+                >
                 <source
                   src={selectedVideo}
                   type='video/mp4'
