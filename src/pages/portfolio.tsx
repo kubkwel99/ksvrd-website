@@ -146,16 +146,6 @@ const PortfolioPage = () => {
                         controls={false}
                       />
                     )}
-
-                    {/* <iframe
-                      src={video.url}
-                      loading='lazy'
-                      width='300'
-                      height='200'
-                      allow=' fullscreen; encrypted-media'
-                      allowFullScreen
-                      className='w-full h-auto object-cover'
-                      title={video.title}></iframe> */}
                   </div>
                 ) : (
                   <img
@@ -219,7 +209,7 @@ const PortfolioPage = () => {
                 </ul>
               </div>
               <button
-                className='absolute -right-10 top-36 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 mx-10 py-5'
+                className='absolute -right-10 top-28 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 mx-10 py-5'
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={closeOverlay}>
