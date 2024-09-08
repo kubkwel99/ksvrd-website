@@ -21,13 +21,20 @@ type MediaItem = {
   thumbnail_url: string;
   iframe_url: string; // Add this field for iframe URL
 };
+interface VideoOverlayProps {
+  video: MediaItem;
+}
 
-const PortfolioPage = () => {
+const PortfolioPage: React.FC<VideoOverlayProps> = ({ video }) => {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const videoRefs = useRef<Map<string, HTMLVideoElement | null>>(new Map());
+
+  const handleVideo = () => {
+    setSelectedVideo(video.public_id); // Use publicID instead of URL
+  };
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -135,7 +142,8 @@ const PortfolioPage = () => {
                 {video.resource_type === 'video' ? (
                   <div
                     className='cursor-pointer w-64 h-auto aspect-square'
-                    onClick={() => handleVideoClick(video.url)}>
+                    onClick={() => handleVideoClick(video.url)}
+                    onTouchStart={handleVideo}>
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover'
@@ -145,13 +153,23 @@ const PortfolioPage = () => {
                         controls={false}
                       />
                     )}
+
+                    {/* <iframe
+                      src={video.url}
+                      loading='lazy'
+                      width='300'
+                      height='200'
+                      allow=' fullscreen; encrypted-media'
+                      allowFullScreen
+                      className='w-full h-auto object-cover'
+                      title={video.title}></iframe> */}
                   </div>
                 ) : (
                   <img
                     src={video.secure_url}
                     alt={video.title}
                     className='cursor-pointer w-52 h-auto object-cover'
-                    onClick={() => handleVideoClick(video.secure_url)}
+                    // onClick={() => handleVideoClick(video.secure_url)}
                   />
                 )}
               </div>
