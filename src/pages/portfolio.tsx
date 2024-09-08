@@ -231,7 +231,7 @@ import { IoCloseCircleSharp } from 'react-icons/io5';
 import { headerVariants } from './../../types/motion';
 import { GetServerSideProps } from 'next';
 import { getAllMedia } from './../../utils/cloudinary';
-
+import { CldVideoPlayer } from 'next-cloudinary';
 type MediaItem = {
   url: string;
   public_id: string;
@@ -358,7 +358,14 @@ const PortfolioPage = () => {
                     className='cursor-pointer w-64 h-auto aspect-square'
                     onClick={() => handleVideoClick(video.url)} // Use iframe_url for video
                   >
-                    <iframe
+                                        {video && (
+                      <CldVideoPlayer
+                        width='360'
+                        height='470'
+                        src={video.url}
+                      />
+                    )}
+{/*                     <iframe
                       src={video.url}
                       loading='lazy'
                       width='300'
@@ -367,7 +374,7 @@ const PortfolioPage = () => {
                       allow=' fullscreen; encrypted-media'
                       allowFullScreen
                       className='w-full h-auto object-cover'
-                      title={video.title}></iframe>
+                      title={video.title}></iframe> */}
                   </div>
                 ) : (
                   <img
