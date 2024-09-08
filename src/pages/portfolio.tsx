@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import { FaTiktok } from 'react-icons/fa6';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { IoCloseCircleSharp } from 'react-icons/io5';
-import { headerVariants } from './../../types/motion';
+import { fadeIn, headerVariants } from './../../types/motion';
 
 type MediaItem = {
   url: string;
@@ -21,7 +21,7 @@ const PortfolioPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const videoRefs = useRef<HTMLVideoElement[]>([]);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
     const fetchMedia = async () => {
@@ -69,17 +69,14 @@ const PortfolioPage = () => {
     setSelectedVideo(null);
   };
 
-  // Lazy load videos with IntersectionObserver
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const video = entry.target as HTMLVideoElement;
-            if (!video.src) {
-              video.src = video.dataset.src!;
-            }
-            observer.unobserve(video); // Unobserve after loading the video
+            video.src = video.dataset.src!;
+            observer.unobserve(video);
           }
         });
       },
@@ -88,7 +85,6 @@ const PortfolioPage = () => {
       }
     );
 
-    // Observe each video
     videoRefs.current.forEach((video) => {
       if (video) {
         observer.observe(video);
@@ -106,7 +102,7 @@ const PortfolioPage = () => {
 
   return (
     <motion.div
-      className='bg-neutral-900 flex flex-col items-center justify-center w-full py-20'
+      className='bg-neutral-900 flex flex-col items-center justify-center w-full py-20 '
       id='portfolio'
       style={{
         boxShadow: 'inset 0 20px 9px -6px black',
@@ -116,7 +112,7 @@ const PortfolioPage = () => {
         variants={headerVariants}
         initial='hidden'
         whileInView='show'
-        className='container flex px-4'>
+        className='container flex px-4 '>
         {error ? (
           <div className='text-red-500'>{`Error: ${error}`}</div>
         ) : (
@@ -127,20 +123,15 @@ const PortfolioPage = () => {
                 key={item.public_id}>
                 {item.resource_type === 'video' ? (
                   <video
-                    ref={(el) => {
-                      if (el) {
-                        videoRefs.current[index] = el;
-                      }
-                    }}
                     className='cursor-pointer w-64 h-auto aspect-square object-cover'
                     width='300px'
-                    onClick={() => handleVideoClick(item.secure_url)}
+                    ref={(el) => (videoRefs.current[index] = el)}
                     data-src={item.secure_url}
-                    muted
-                    playsInline
-                    controls>
+                    onClick={() => handleVideoClick(item.secure_url)}
+                    preload="none"
+                    poster="path_to_placeholder_image">
                     <source
-                      src=''
+                      src=""
                       type='video/mp4'
                     />
                     Your browser does not support the video tag.
@@ -189,7 +180,7 @@ const PortfolioPage = () => {
                       <FaInstagram />
                     </a>
                   </li>
-                  <li className='hover:scale-110 transition ease-in-out'>
+                  <li className='hover:scale-110  transition ease-in-out'>
                     <a
                       href='https://www.tiktok.com/@krsvrd'
                       target='_blank'>
@@ -199,7 +190,7 @@ const PortfolioPage = () => {
                 </ul>
               </div>
               <button
-                className='absolute right-0 top-24 mx-10 py-5 text-3xl text-black rounded hover:transition ease-in-out delay-100'
+                className='absolute right-0 top-24 mx-10 py-5 text-3xl text-black  rounded hover:transition ease-in-out delay-100'
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={closeOverlay}>
