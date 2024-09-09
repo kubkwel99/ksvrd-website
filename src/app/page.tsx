@@ -34,6 +34,7 @@ export default function HomePage() {
           background: 'url(/images/bg.jpg)',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
+          backgroundPosition: '50%',
           zIndex: '-100',
         }}>
         <motion.div
