@@ -23,7 +23,6 @@ type MediaItem = {
 const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const videoRefs = useRef<HTMLVideoElement[]>([]);
   const overlayRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -94,37 +93,50 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
       handleVideoClick(url);
     }
   };
+  //mouse & touch config
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node;
+      if (overlayRef.current && !overlayRef.current.contains(target)) {
+        closeOverlay();
+      }
+    };
+
+    if (selectedVideo) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [selectedVideo]);
+
+   //keyboard config
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeOverlay();
+      }
+    };
+
+    if (selectedVideo) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedVideo]);
 
   const closeOverlay = () => {
     setSelectedVideo(null);
   };
-
-  const setRef = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      const videoElement = node.querySelector('video') as HTMLVideoElement | null;
-
-      if (videoElement && !videoRefs.current.includes(videoElement)) {
-        videoRefs.current.push(videoElement);
-
-        // Mute the video to avoid NotAllowedError for autoplay
-        videoElement.muted = true; // Ensure the video is muted
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              videoElement.play().catch((error) => {
-                console.error('Video play failed:', error);
-              });
-            } else {
-              videoElement.pause();
-            }
-          });
-        });
-
-        observer.observe(videoElement);
-      }
-    }
-  }, []);
 
   return (
     <motion.div
@@ -145,16 +157,13 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
         ) : (
           <div className='grid gap-5 grid-cols-2 md:grid-cols-3 p-0 m-0 place-items-center justify-items-center'>
             {media.map((video) => (
-              <div
-                ref={setRef}
-                key={video.public_id}>
+              <div key={video.public_id}>
                 {video.resource_type === 'video' ? (
                   <div
                     className='cursor-pointer w-64 h-auto aspect-square'
                     onTouchEnd={(e) => handleTouchEnd(e, video.url)}
                     onTouchStart={(e) => handleTouchStart(e, video.url)}
-                    onClick={() => handleVideoClick(video.url)}
-                     >
+                    onClick={() => handleVideoClick(video.url)}>
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover'
@@ -227,7 +236,7 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
                 </ul>
               </div>
               <button
-                className='absolute -right-10 top-36 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 mx-10 py-5'
+                className='absolute right-10 top-36 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 sm:mx-20 py-10'
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={closeOverlay}>
@@ -240,14 +249,3 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
     </motion.div>
   );
 };
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const media = await getAllMedia();
-  return {
-    props: {
-      media,
-    },
-  };
-};
-
-export default PortfolioPage;
