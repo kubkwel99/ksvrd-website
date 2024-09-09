@@ -249,3 +249,14 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
     </motion.div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const media = await getAllMedia();
+  return {
+    props: {
+      media,
+    },
+  };
+};
+
+export default PortfolioPage;
