@@ -7,7 +7,7 @@ import { fadeIn, staggerChildren } from './../types/motion';
 
 const Footer = () => {
   return (
-    <footer className=' border-t border-gray-500 bg-neutral-800'>
+    <footer className='border-t border-gray-500 bg-neutral-800'>
       <motion.div
         variants={staggerChildren}
         initial='hidden'
@@ -19,12 +19,14 @@ const Footer = () => {
           loop: Infinity,
         }}
         viewport={{ once: false, amount: 0.25 }}
-        className=' mx-auto'>
-        <div className='container grid  place-items-center justify-items-center grid-cols-3 gap-4 md:place-items-center m-auto py-5 '>
+        className=''>
+        <div 
+        className='container mx-auto flex gap-5 items-start justify-between p-4 text-sm'
+        >
           <motion.div
             variants={fadeIn('up', 'tween', 0.3, 0.5)}
             className=''>
-            <h2 className='mb-6  text-sm font-semibold text-gray-900 uppercase dark:text-white'>
+            <h2 className='mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white'>
               @ksvrd
             </h2>
             <ul className='text-gray-500 dark:text-gray-400 font-medium'>
@@ -50,9 +52,9 @@ const Footer = () => {
             </h2>
             <ul className='text-gray-500 dark:text-gray-400 font-medium'>
               <li className='mb-4'>
-               <a
-                   href='https://www.facebook.com/kika.svoradova?locale=sk_SK'
-                   target='_blank'
+                <a
+                  href='https://www.facebook.com/kika.svoradova?locale=sk_SK'
+                  target='_blank'
                   className='hover:underline'>
                   Facebook
                 </a>
