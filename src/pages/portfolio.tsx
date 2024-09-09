@@ -114,7 +114,7 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
     };
   }, [selectedVideo]);
 
-   //keyboard config
+  //keyboard config
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -155,20 +155,20 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
         {error ? (
           <div className='text-red-500'>{`Error: ${error}`}</div>
         ) : (
-          <div className='grid gap-5 grid-cols-2 md:grid-cols-3 p-0 m-0 place-items-center justify-items-center'>
+          <div className='grid gap-2 grid-cols-2 md:grid-cols-3 place-items-center justify-items-center'>
             {media.map((video) => (
               <div key={video.public_id}>
                 {video.resource_type === 'video' ? (
                   <div
-                    className='cursor-pointer w-64 h-auto aspect-square'
+                    className='cursor-pointer aspect-square w-56 no-shrink flex-nowrap'
                     onTouchEnd={(e) => handleTouchEnd(e, video.url)}
                     onTouchStart={(e) => handleTouchStart(e, video.url)}
                     onClick={() => handleVideoClick(video.url)}>
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover'
-                        height={300}
-                        width={300}
+                        height={200}
+                        width={200}
                         src={video.url}
                         controls={false}
                       />
@@ -178,7 +178,7 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
                   <img
                     src={video.secure_url}
                     alt={video.title}
-                    className='cursor-pointer w-52 h-auto object-cover'
+                    // className='cursor-pointer object-cover w-22'
                     onClick={() => handleVideoClick(video.secure_url)}
                     onTouchStart={() => handleVideoClick(video.secure_url)}
                   />
@@ -191,8 +191,17 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
         {selectedVideo && (
           <div
             ref={overlayRef}
+            onClick={closeOverlay}
             className='fixed top-0 right-0 flex flex-col m-0 w-full h-full backdrop-blur-md'>
-            <div className='flex flex-col items-center justify-center max-h-screen py-40 relative'>
+            <div className='flex flex-col items-center justify-center max-h-screen  py-40  relative'>
+              <button
+                // className='absolute right-10 top-26 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 sm:mx-20 py-10'
+                className='flex text-black text-3xl ml-auto px-4'
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={closeOverlay}>
+                {isHovered ? <IoCloseCircleSharp /> : <IoIosCloseCircleOutline />}
+              </button>
               <video
                 ref={videoRef}
                 className='max-w-full max-h-full rounded-lg'
@@ -235,13 +244,6 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
                   </li>
                 </ul>
               </div>
-              <button
-                className='absolute right-10 top-36 text-3xl text-black rounded hover:transition ease-in-out delay-100 sm:absolute sm:right-0 sm:top-24 sm:mx-20 py-10'
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={closeOverlay}>
-                {isHovered ? <IoCloseCircleSharp /> : <IoIosCloseCircleOutline />}
-              </button>
             </div>
           </div>
         )}
