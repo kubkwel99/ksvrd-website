@@ -160,6 +160,9 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
             {media.map((video, id) => (
               <motion.div
                 key={video.public_id}
+                  initial='hidden'
+                  animate='show'
+                  exit='hidden'
                 variants={slideIn('down', 'tween', (id + 1) * 0.2, 0.5)}>
                 {video.resource_type === 'video' ? (
                   <div
