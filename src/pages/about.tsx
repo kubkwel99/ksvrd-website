@@ -50,7 +50,7 @@ const AboutPage = () => {
                   hotový výstup, ktorý vám odovzdám.
                 </motion.p>
                 <motion.p variants={textVariant(1.0)}>
-                  Na svojej tvorbe si potrpím, aby boli moji odberatelia spokojní.
+                  Na svojej tvorbe si potrpím, aby boli moji klienti spokojní.
                 </motion.p>
               </div>
             </div>
