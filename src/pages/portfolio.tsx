@@ -160,7 +160,7 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
               <div key={video.public_id}>
                 {video.resource_type === 'video' ? (
                   <div
-                    className='cursor-pointer aspect-square w-56 no-shrink flex-nowrap'
+                    className='cursor-pointer aspect-square w-52 no-shrink flex-nowrap'
                     onTouchEnd={(e) => handleTouchEnd(e, video.url)}
                     onTouchStart={(e) => handleTouchStart(e, video.url)}
                     onClick={() => handleVideoClick(video.url)}>
