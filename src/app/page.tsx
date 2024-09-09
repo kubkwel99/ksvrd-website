@@ -5,8 +5,25 @@ import { headerVariants, staggerContainer, textVariant } from '../../types/motio
 import Footer from './../../components/Footer';
 import AboutPage from './../pages/about';
 import PortfolioPage from './../pages/portfolio';
+import { useState, useEffect } from 'react';
+
+type MediaItem = {
+  url: string;
+  public_id: string;
+  secure_url: string;
+  resource_type: string;
+  title: string;
+};
 
 export default function HomePage() {
+  const [media, setMedia] = useState<MediaItem[]>([]);
+  useEffect(() => {
+    // Fetch media data from an API or other source
+    fetch('/api/media')
+      .then(response => response.json())
+      .then(data => setMedia(data))
+      .catch(error => console.error('Error fetching media:', error));
+  }, []);
   return (
     <div
       className='bg-top h-screen text-white'
@@ -61,7 +78,7 @@ export default function HomePage() {
         </motion.div>
       </motion.div>
       <AboutPage />
-      <PortfolioPage />
+      <PortfolioPage media={media} />
       <Footer/>
     </div>
   );
