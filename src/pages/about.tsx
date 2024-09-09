@@ -23,7 +23,7 @@ const AboutPage = () => {
           ease: 'easeInOut',
           loop: Infinity,
         }}
-        viewport={{ once: false, amount: 0.5 }}
+        
         className=' container px-0 flex sm:flex-col lg:px-40'>
         <div className=' flex flex-col  '>
           <div className=' items-center sm:flex flex-row justify-between p-4'>
