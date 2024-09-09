@@ -50,9 +50,9 @@ const Footer = () => {
             </h2>
             <ul className='text-gray-500 dark:text-gray-400 font-medium'>
               <li className='mb-4'>
-                <a
-                  href='https://www.instagram.com/svoradova.k/'
-                  target='_blank'
+               <a
+                   href='https://www.facebook.com/kika.svoradova?locale=sk_SK'
+                   target='_blank'
                   className='hover:underline'>
                   Facebook
                 </a>
