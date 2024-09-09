@@ -6,13 +6,14 @@ import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import { FaTiktok } from 'react-icons/fa6';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { IoCloseCircleSharp } from 'react-icons/io5';
-import { headerVariants } from './../../types/motion';
+import { headerVariants, zoomIn } from './../../types/motion';
 import { GetServerSideProps } from 'next';
 import { getAllMedia } from './../../utils/cloudinary';
 import 'next-cloudinary/dist/cld-video-player.css';
 import { CldVideoPlayer } from 'next-cloudinary';
 
 type MediaItem = {
+  id: number;
   url: string;
   public_id: string;
   secure_url: string;
@@ -156,11 +157,13 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
           <div className='text-red-500'>{`Error: ${error}`}</div>
         ) : (
           <div className='grid gap-2 grid-cols-2 md:grid-cols-3 place-items-center justify-items-center'>
-            {media.map((video) => (
-              <div key={video.public_id}>
+            {media.map((video, id) => (
+              <motion.div
+                key={video.public_id}
+                variants={zoomIn((id + 1) * 0.2, 0.5)}>
                 {video.resource_type === 'video' ? (
                   <div
-                    className='cursor-pointer aspect-square w-52 no-shrink flex-nowrap'
+                    className='cursor-pointer aspect-square w-56 no-shrink flex-nowrap md:w-58'
                     onTouchEnd={(e) => handleTouchEnd(e, video.url)}
                     onTouchStart={(e) => handleTouchStart(e, video.url)}
                     onClick={() => handleVideoClick(video.url)}>
@@ -178,12 +181,11 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
                   <img
                     src={video.secure_url}
                     alt={video.title}
-                    // className='cursor-pointer object-cover w-22'
                     onClick={() => handleVideoClick(video.secure_url)}
                     onTouchStart={() => handleVideoClick(video.secure_url)}
                   />
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
