@@ -8,7 +8,7 @@ import { headerVariants, slideIn, textVariant } from './../../types/motion';
 const AboutPage = () => {
   return (
     <div
-      className='flex flex-col h-screen justify-center items-center text-black '
+      className='flex flex-col bg-gray-300 h-screen justify-center items-center text-black '
       id='about'
       style={{
         boxShadow: 'inset 0 17px 19px -7px ',
