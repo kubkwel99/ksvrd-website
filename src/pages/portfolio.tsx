@@ -240,8 +240,6 @@ type MediaItem = {
   secure_url: string;
   resource_type: string;
   title: string;
-  thumbnail_url: string;
-  iframe_url: string;
 };
 
 // const PortfolioPage = () => {
@@ -422,25 +420,26 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
 
   const setRef = useCallback((node: HTMLDivElement | null) => {
     if (node) {
-      // Use querySelector to find the actual <video> element within the div
       const videoElement = node.querySelector('video') as HTMLVideoElement | null;
-  
+
       if (videoElement && !videoRefs.current.includes(videoElement)) {
-        // Add the video element to the refs array
         videoRefs.current.push(videoElement);
-  
-        // Perform any operations on the video element, like adding observers
+
+        // Mute the video to avoid NotAllowedError for autoplay
+        videoElement.muted = true; // Ensure the video is muted
+
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              videoElement.play(); // Example action, like auto-play
+              videoElement.play().catch((error) => {
+                console.error('Video play failed:', error);
+              });
             } else {
               videoElement.pause();
             }
           });
         });
-  
-        // Start observing the video element
+
         observer.observe(videoElement);
       }
     }
@@ -467,13 +466,14 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
             {media.map((video) => (
               <div
                 ref={setRef}
-                key={video.public_id}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={(e) => handleTouchEnd(e, video.url)}>
+                key={video.public_id}>
                 {video.resource_type === 'video' ? (
-                  <div className='cursor-pointer w-64 h-auto aspect-square'>
-                    {/* // onClick={() => handleVideoClick(video.url)}
-                    // onTouchStart={() => handleVideoClick(video.url)} */}
+                  <div
+                    className='cursor-pointer w-64 h-auto aspect-square'
+                    
+                    onTouchEnd={(e) => handleTouchEnd(e, video.url)}
+                    onClick={() => handleVideoClick(video.url)}>
+                     {/* onTouchStart={() => handleVideoClick(video.url)} */}
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover'
