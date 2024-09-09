@@ -1,12 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
 import { FaTiktok } from 'react-icons/fa6';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { IoCloseCircleSharp } from 'react-icons/io5';
-import { headerVariants, zoomIn } from './../../types/motion';
+import { headerVariants, slideIn } from './../../types/motion';
 import { GetServerSideProps } from 'next';
 import { getAllMedia } from './../../utils/cloudinary';
 import 'next-cloudinary/dist/cld-video-player.css';
@@ -160,7 +160,7 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
             {media.map((video, id) => (
               <motion.div
                 key={video.public_id}
-                variants={zoomIn((id + 1) * 0.2, 0.5)}>
+                variants={slideIn('down', 'tween', (id + 1) * 0.2, 0.5)}>
                 {video.resource_type === 'video' ? (
                   <div
                     className='cursor-pointer bg-cover aspect-square w-44 no-shrink flex-nowrap md:w-52 xl:w-64 '
