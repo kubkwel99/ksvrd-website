@@ -82,13 +82,7 @@ const AboutPage = () => {
           <motion.div
             variants={slideIn('down', 'tween', 0.7, 0.7)}
             className='flex gap-5 flex-col items-center justify-center p-6 sm:flex-row'>
-            <button className='bg-neutral-300 p-2 px-4 rounded-2xl shadow-xl  hover:bg-neutral-500 transition-all'>
-              <a
-                className=''
-                href='mailto:kika.svoradova26@gmail.com'>
-                Napíš mi...
-              </a>
-            </button>
+        
             <button className='bg-neutral-300 p-2 px-4 rounded-2xl shadow-xl  hover:bg-neutral-500 transition-all'>
               <a
                 className=''
@@ -96,6 +90,8 @@ const AboutPage = () => {
                 download>
                 Moje CV
               </a>
+
+              <p className='p-10'></p>
             </button>
           </motion.div>
         </div>
