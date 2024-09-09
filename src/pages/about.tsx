@@ -34,7 +34,7 @@ const AboutPage = () => {
               alt=''
             />
             <div className='flex flex-col items-center grow gap-2 p-3'>
-              <div className='max-w-xl text-center py-8 '>
+              <div className='max-w-xl text-center py-8'>
                 <motion.h1
                   variants={textVariant(0.4)}
                   className='font-serif text-3xl font-bold'>
@@ -57,7 +57,7 @@ const AboutPage = () => {
           </div>
           <motion.div
             variants={slideIn('down', 'tween', 0.5, 0.5)}
-            className=' flex items-center justify-center gap-12 max-w-90 sm:justify-between px-16 py-2 w-3/6 mx-auto'>
+            className='flex items-center justify-center gap-12 max-w-90 sm:justify-between px-16 py-2 w-3/6 mx-auto'>
             <a
               href='https://www.facebook.com/kika.svoradova?locale=sk_SK'
               className='text-4xl  hover:scale-110 transition-all'>
@@ -85,18 +85,12 @@ const AboutPage = () => {
             <button className='bg-neutral-300 p-2 px-4 rounded-2xl shadow-xl  hover:bg-neutral-500 transition-all'>
               <a
                 className=''
-                href='mailto:kika.svoradova26@gmail.com'>
-                Napíš mi...
-              </a>
-            </button>
-            <button className='bg-neutral-300 p-2 px-4 rounded-2xl shadow-xl  hover:bg-neutral-500 transition-all'>
-              <a
-                className=''
                 href='/kristina-svoradova-sk-cv-3.pdf'
                 download>
                 Moje CV
               </a>
             </button>
+              <p className='bg-transparent p-2 px-4 rounded-2xl shadow-xl'></p
           </motion.div>
         </div>
       </motion.div>
