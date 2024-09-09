@@ -67,7 +67,7 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
   };
 
   // Handle touch start event
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const handleTouchStart = (e: React.TouchEvent, url: string) => {
     const touch = e.touches[0];
     touchStartX.current = touch.clientX;
     touchStartY.current = touch.clientY;
@@ -151,8 +151,10 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
                 {video.resource_type === 'video' ? (
                   <div
                     className='cursor-pointer w-64 h-auto aspect-square'
-                    onTouchStart={() => handleVideoClick(video.url)}
-                    onClick={() => handleVideoClick(video.url)}>
+                    onTouchEnd={(e) => handleTouchEnd(e, video.url)}
+                    onTouchStart={(e) => handleTouchStart(e, video.url)}
+                    onClick={() => handleVideoClick(video.url)}
+                     >
                     {media && (
                       <CldVideoPlayer
                         className=' rounded-xl aspect-square bg-cover'
