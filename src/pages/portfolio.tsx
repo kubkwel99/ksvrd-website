@@ -163,13 +163,13 @@ const PortfolioPage: React.FC<{ media: MediaItem[] }> = () => {
                 variants={zoomIn((id + 1) * 0.2, 0.5)}>
                 {video.resource_type === 'video' ? (
                   <div
-                    className='cursor-pointer aspect-square w-56 no-shrink flex-nowrap md:w-58'
+                    className='cursor-pointer bg-cover aspect-square w-44 no-shrink flex-nowrap md:w-52 xl:w-64 '
                     onTouchEnd={(e) => handleTouchEnd(e, video.url)}
                     onTouchStart={(e) => handleTouchStart(e, video.url)}
                     onClick={() => handleVideoClick(video.url)}>
                     {media && (
                       <CldVideoPlayer
-                        className=' rounded-xl aspect-square bg-cover'
+                        className='rounded-xl shadow-2xl aspect-square bg-cover'
                         height={200}
                         width={200}
                         src={video.url}
