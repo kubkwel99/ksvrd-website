@@ -11,7 +11,7 @@
   background: #e9ecef;
   font-family: "Fira Sans Condensed", sans-serif;
   scroll-behavior: smooth;
-  font-size: clamp(0.7rem, 3vw, 1rem);
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
 }
 
 .container {
