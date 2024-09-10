@@ -8,7 +8,7 @@ export const login = (username: string, password: string): boolean => {
     const user = getUser();
 
     if (user && username === user.username && password === user.password) {
-               Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7, secure: true, sameSite: 'None' }); // Set auth cookie for 7 days
+               Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7, sameSite: 'None', secure: true })
         return true;
     }
     return false;
@@ -16,12 +16,12 @@ export const login = (username: string, password: string): boolean => {
 
 
 export const logout = (): void => {
-    Cookies.remove(COOKIE_NAME); // Remove auth cookie
+    Cookies.remove(COOKIE_NAME, { sameSite: 'None', secure: true });
 };
 
 
 export const isAuthenticated = (): boolean => {
-    return Cookies.get(COOKIE_NAME) === 'logged_in'; // Return true if the user is logged in
+    return Cookies.get(COOKIE_NAME) === 'logged_in'; 
 };
 
 
@@ -29,13 +29,11 @@ export const updatePassword = (username: string, newPassword: string): void => {
     const user = getUser();
 
     if (user && user.username === username) {
-        
         updateUser(username, newPassword);
-
-       
-        Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7, secure: true, sameSite: 'None' });
-        alert('Password updated successfully. You are logged in with your new password.');
+        
+        Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7, sameSite: 'None', secure: true });         
+        alert('Heslo úspešne zmenené.');
     } else {
-        alert('User not found.');
+        alert('Uživatel nenajdený.');
     }
 };
