@@ -39,7 +39,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (typeof window !== 'undefined') {
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('user', username);
-        console.log('Auth set in localStorage')
+        console.log('Auth set in localStorage:', localStorage.getItem('isAuthenticated')); // Debugging line
+        console.log('User set in localStorage:', localStorage.getItem('user'));
       }
     } else {
       alert('Zlé zadané prihlasovacie meno alebo heslo.');
