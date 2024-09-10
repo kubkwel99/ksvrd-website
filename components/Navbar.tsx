@@ -1,23 +1,27 @@
-// src/components/Navbar.tsx
 'use client';
 
-import React, { useContext, useState } from 'react';
-import { AuthContext } from './../src/contexts/AuthContext';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { isAuthenticated, logout } from './../utils/auth';
+import LoginPopup from './LoginPopUp';
 import { useRouter } from 'next/navigation';
 import { FaRegUser, FaBars, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { slideUp } from './../types/motion';
-import LoginPopup from './LoginPopUp';
 
 export default function Navbar() {
-  const { isAuthenticated, logout } = useContext(AuthContext)!;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    setIsLoggedIn(isAuthenticated());
+  }, []);
+
   const handleLogout = () => {
     logout();
+    setIsLoggedIn(false);
     router.push('/');
   };
 
@@ -49,7 +53,9 @@ export default function Navbar() {
 
           <ul className='hidden md:flex md:flex-row md:items-center md:gap-5 text-lg'>
             <li>
-              <Link href='/'>
+              <Link
+                legacyBehavior
+                href='/'>
                 <a className='hover:text-neutral-400'>Domov</a>
               </Link>
             </li>
@@ -71,9 +77,11 @@ export default function Navbar() {
         </div>
         {/* Authentication Section */}
         <div className='flex items-center'>
-          {isAuthenticated ? (
+          {isLoggedIn ? (
             <>
-              <Link href='/dashboard'>
+              <Link
+                legacyBehavior
+                href='/dashboard'>
                 <a className='text-white text-lg mx-4'>
                   <FaRegUser />
                 </a>
@@ -98,7 +106,9 @@ export default function Navbar() {
       {isMenuOpen && (
         <ul className='flex flex-col items-center mt-4 space-y-4 md:hidden'>
           <li>
-            <Link href='/'>
+            <Link
+              legacyBehavior
+              href='/'>
               <a className='hover:text-neutral-400'>Domov</a>
             </Link>
           </li>
