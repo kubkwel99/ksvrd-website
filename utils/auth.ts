@@ -8,7 +8,7 @@ export const login = (username: string, password: string): boolean => {
     const user = getUser();
 
     if (user && username === user.username && password === user.password) {
-        Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7 }); // Set auth cookie for 7 days
+               Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7, secure: true, sameSite: 'None' }); // Set auth cookie for 7 days
         return true;
     }
     return false;
