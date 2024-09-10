@@ -37,8 +37,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setIsAuthenticated(true);
       setUser(username);
       if (typeof window !== 'undefined') {
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('user', username);
+localStorage.setItem('isAuthenticated', 'true');
+localStorage.setItem('user', 'admin');
         console.log('Auth set in localStorage:', localStorage.getItem('isAuthenticated')); // Debugging line
         console.log('User set in localStorage:', localStorage.getItem('user'));
       }
