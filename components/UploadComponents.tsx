@@ -13,7 +13,9 @@ const UploadComponent: React.FC = () => {
 
   const { isAuthenticated } = authContext;
   const [uploadMessage, setUploadMessage] = useState<string>('');
-
+  
+  console.log('isAuthenticated in UploadComponent:', isAuthenticated);
+  
   if (!isAuthenticated) {
     return <p>Prihlás sa ak chceš nahrať súbor.</p>;
   }
