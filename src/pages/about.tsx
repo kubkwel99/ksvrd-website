@@ -27,6 +27,7 @@ const AboutPage = () => {
         className=' container px-0 flex sm:flex-col lg:px-40'>
         <div className=' flex flex-col  '>
           <div className=' items-center sm:flex flex-row justify-between p-4'>
+            <p className='p-10'></p>
             <img
               className='mx-auto w-56 shadow-xl rounded-md sm:w-80'
              
@@ -90,9 +91,8 @@ const AboutPage = () => {
                 download>
                 Moje CV
               </a>
-
-              <p className='p-10'></p>
             </button>
+            <p className='p-10'></p>
           </motion.div>
         </div>
       </motion.div>
