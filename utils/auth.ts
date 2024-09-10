@@ -33,7 +33,7 @@ export const updatePassword = (username: string, newPassword: string): void => {
         updateUser(username, newPassword);
 
        
-        Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7 }); 
+        Cookies.set(COOKIE_NAME, 'logged_in', { expires: 7, secure: true, sameSite: 'None' });
         alert('Password updated successfully. You are logged in with your new password.');
     } else {
         alert('User not found.');
