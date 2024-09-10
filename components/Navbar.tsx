@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useContext, useState } from 'react';
-import { AuthContext } from './../contexts/AuthContext';
+import { AuthContext } from './../src/contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaRegUser, FaBars, FaTimes } from 'react-icons/fa';
