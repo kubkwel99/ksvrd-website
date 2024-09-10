@@ -10,7 +10,7 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600', '700
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='sk'>
-      <body className={Poppins.className}>
+      <body className={poppins.className}>
         <AuthProvider>
           <Navbar />
           <main>{children}</main>
